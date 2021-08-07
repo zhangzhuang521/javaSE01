@@ -1,0 +1,34 @@
+String的原理详解：
+1.空参创建对象，打印出来的不是地址值，而是实际内容
+  public String() {
+         this.value = "".value;
+     }
+2.String是一个字符串，一旦被赋值之后，是不可改变的，相当于一个常量，主要是被final修饰
+public final class String
+
+注意事项：
+1.字符串常量存在于字符串常量池中，只会被创建一次
+2.长度用 ：length()方法
+  获取每个字符：
+    方式一：遍历字符串，通过charAt()方法来获取
+    方式二：通过toCharArray()方法获取一个字符数组，再遍历
+  截取：substring()方法
+  替换：replace()方法
+  分割：spilt()方法
+3.在字符串参与拼接的时候，系统会自动生成StringBuilder对象，利用append()方法来参与拼接，
+拼接后在用toString()方法来转换成字符串
+4.String继承或者间接继承Object类，Object类的toString()方法,相当于返回自己本身
+ public String toString() {
+        return this;
+    }
+  Object类的equals()方法,如果没有重写equals()方法，则比较的是地址值；
+  如果重写了equals()方法，则比较的是内容值
+5.String与StringBuilder的区别：
+string是一个长度不变的字符串
+StringBuilder相当于是一个长度可变的字符串，相当于一个容器
+StringBuilder的方法
+添加：append()
+长度：length()
+反转：reverse()
+转换成字符串：toString()
+
