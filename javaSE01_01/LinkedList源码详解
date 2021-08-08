@@ -1,6 +1,8 @@
 LinkedList使用空参创建对象
 public LinkedList() {
     }
+transient Node<E> first;
+transient Node<E> last;
 public boolean add(E e) {
         linkLast(e);
         return true;
@@ -38,14 +40,30 @@ private static class Node<E> {
         size++;
         modCount++;
     }
-void linkLast(E e) {
-        final Node<E> l = last;
-        final Node<E> newNode = new Node<>(l, e, null);
-        last = newNode;
-        if (l == null)
-            first = newNode;
-        else
-            l.next = newNode;
-        size++;
-        modCount++;
+LinkedList添加总结：
+先创建对象后，里面有两个成员变量：first，last，
+在添加数据的时候，里面有一个node节点对象
+节点对象氛围三部分：上一个节点的地址值，本身数据，下一个节点的地址值
+双向链表
+
+
+ public E get(int index) {
+        checkElementIndex(index);
+        return node(index).item;
     }
+Node<E> node(int index) {
+        // assert isElementIndex(index);
+
+        if (index < (size >> 1)) {
+            Node<E> x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+            return x;
+        } else {
+            Node<E> x = last;
+            for (int i = size - 1; i > index; i--)
+                x = x.prev;
+            return x;
+        }
+获取的方法的原理：
+在获取时，会利用索引与长度的一半进行比较，如果小于，从前开始查找；如果大于，从头后开始查找

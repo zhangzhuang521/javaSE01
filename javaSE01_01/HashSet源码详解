@@ -1,0 +1,29 @@
+public HashSet() {
+        map = new HashMap<>();
+    }
+ public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+    }
+static final float DEFAULT_LOAD_FACTOR = 0.75f;
+  public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+    }
+private static final Object PRESENT = new Object();
+public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+原理分析：
+创建 HashSet 对象之后，会在内存中生成一个长度为16的数组，加载因子0.75，在使用add()
+方法添加元素的时候，主要是使用的map.put()方法来添加元素，值为object类型的present固定值，
+然后利用object的hashCode()方法计算出该键的哈希值，然后利用哈希值对16取余找到该元素在
+数组中对应的位置，如果该位置没有元素，直接添加，如果有元素，然后利用object的equals()方法
+来比较内容值，如果一样不添加，不一样则添加
+
+扩容：加载因子为0.75，当数组的长度为12时，则进行扩容，长度为原来的2倍
+
+哈希表底层：
+jdk8 之前 ：数组+链表
+jdk8 之后 ：数组+链表+红黑树
+
+当长度为8时，转换成红黑树进行添加
+
